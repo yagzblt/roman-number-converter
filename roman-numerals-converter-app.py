@@ -2,35 +2,14 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
-val = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1]
-syb = ["M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"]
+def convert(decimal_num):
+    roman = {1000:'M', 900:'CM', 500:'D', 400:'CD', 100:'C', 90:'XC', 50:'L', 40:'XL', 10:'X', 9:'IX', 5:'V', 4:'IV', 1:'I'}
+    num_to_roman = ''
 
-
-print("###  This program converts decimal numbers to Roman Numerals ###")
-print('(To exit the program, please type "exit")')
-
-while True:
-    user_input = input("Please enter a number between 1 and 3999, inclusively: ")
-
-    # Check for exit
-    if user_input.lower() == "exit":
-        break
-
-    # Validate input
-    try:
-        num = int(user_input)
-        if 1 <= num <= 3999:
-            # Convert and display result
-            roman_num = ''
-            for i in range(len(val)):
-                while num >= val[i]:
-                    roman_num += syb[i]
-                    num -= val[i]
-            print(f"The Roman numeral representation: {roman_num}")
-        else:
-            print("Input out of range. Please enter a number between 1 and 3999.")
-    except ValueError:
-        print("Invalid input. Please enter a valid number or type 'exit' to end the program.")
+    for i in roman.keys():
+        num_to_roman += roman[i]*(decimal_num//i) 
+        decimal_num %= i
+    return num_to_roman
 
 
 @app.route('/', methods=['POST', 'GET'])
@@ -38,15 +17,13 @@ def main_post():
     if request.method == 'POST':
         alpha = request.form['number']
         if not alpha.isdecimal():
-            return render_template('index.html', developer_name='murat', not_valid=True)
+            return render_template('index.html', developer_name='yagiz', not_valid=True)
         number = int(alpha)
         if not 0 < number < 4000:
-            return render_template('index.html', developer_name='murat', not_valid=True)
-        return render_template('result.html', number_decimal = number , number_roman= convert(number), developer_name='murat')
+            return render_template('index.html', developer_name='yagiz', not_valid=True)
+        return render_template('result.html', number_decimal = number , number_roman= convert(number), developer_name='osvaldo')
     else:
-        return render_template('index.html', developer_name='murat', not_valid=False)
-
-
+        return render_template('index.html', developer_name='yagiz', not_valid=False)
 
 if __name__ == '__main__':
     # app.run(debug=True)
