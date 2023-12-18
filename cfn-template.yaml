@@ -58,7 +58,7 @@ Resources:
         dnf install python3-pip -y
         pip3 install flask
         dnf install git -y
-        FOLDER="https://raw.githubusercontent.com/awsdevopsteam/roman-number-conventer/master"
+        FOLDER="https://raw.githubusercontent.com/yagzblt/roman-number-converter/main"
         cd /home/ec2-user
         wget -P templates ${FOLDER}/templates/index.html
         wget -P templates ${FOLDER}/templates/result.html
